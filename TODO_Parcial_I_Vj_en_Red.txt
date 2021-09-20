@@ -6,7 +6,7 @@ Personajes:
 			-> Empujar/Ser empujado
 			- Caer/Levantarse
 
-	Hacer contador de tiempo (1 minuto)
-	Hacer contador de puntos
+	Hacer contador de tiempo (1 minuto) Ok (Convertir a DateTime)
+	Hacer contador de puntos Ok
 	Objetos que caen, con colisión, que otorgan una
-	determinada cantidad de puntos a quien los obtiene
+	determinada cantidad de puntos a quien los obtiene Ok
