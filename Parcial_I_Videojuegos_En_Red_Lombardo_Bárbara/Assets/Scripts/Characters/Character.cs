@@ -28,9 +28,4 @@ public class Character : MonoBehaviour //No uso Player porque Photon tiene una c
         rbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
     }
 
-    public void ChangeColor(Color color)
-    {
-        GetComponent<Renderer>().material.color = color;
-    }
-
 }

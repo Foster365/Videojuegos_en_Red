@@ -1,0 +1,12 @@
+Personajes:
+	Animaciones:
+			-> Correr
+			-> Saltar
+			-> Victoria
+			-> Empujar/Ser empujado
+			- Caer/Levantarse
+
+	Hacer contador de tiempo (1 minuto)
+	Hacer contador de puntos
+	Objetos que caen, con colisión, que otorgan una
+	determinada cantidad de puntos a quien los obtiene

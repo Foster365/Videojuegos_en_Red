@@ -15,7 +15,7 @@ public class CharacterController : MonoBehaviourPun
         if(!photonView.IsMine) //Uso PhotonView para corroborar que el controller es de mi player
         {
 
-            player.ChangeColor(Color.green);
+            //player.ChangeColor(Color.green);
             Destroy(this);
             return;
 
