@@ -6,10 +6,31 @@ using Photon.Realtime;
 
 public class Instantiator : MonoBehaviour
 {
+    [SerializeField] Transform spawnPoint;
+    [SerializeField] string prefabName;
 
-    public string prefabName;
+    [SerializeField] NetManager netMgr;
     private void Start()
     {
-        PhotonNetwork.Instantiate(prefabName, new Vector3(0, .5f, 0), Quaternion.identity);
+        InstantiatePrefabs();
+    }
+
+    //void InstantiateSpawnPoints()
+    //{
+    //    foreach (SpawnPoint sp in spawnPoints)
+    //    {
+    //        PhotonNetwork.Instantiate(sp.transform.position, Quaternion.identity);
+    //    }
+    //}
+
+    void InstantiatePrefabs()
+    {
+
+            PhotonNetwork.Instantiate(prefabName, spawnPoint.transform.position, Quaternion.identity);
+            //return;
+            //var nickName = PhotonNetwork.Instantiate("NickNamePrefab", point.position, point.rotation);
+            //nickName.GetComponent<NickName>().SetNick(PhotonNetwork.LocalPlayer.NickName, obj);
+            //else return;
+
     }
 }

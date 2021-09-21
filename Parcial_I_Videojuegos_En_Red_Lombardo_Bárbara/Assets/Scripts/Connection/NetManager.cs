@@ -54,10 +54,10 @@ public class NetManager : MonoBehaviourPunCallbacks
         options.IsOpen = true;
         options.IsVisible = true;
 
-        byte maxPlayers;
+        byte maxPlayers = 2;
 
         if (byte.TryParse(inputFieldRoom.text, out maxPlayers)) options.MaxPlayers = maxPlayers;
-        else options.MaxPlayers = 10;
+        else options.MaxPlayers = 2;
 
         string roomName = "";
         if (string.IsNullOrEmpty(inputFieldRoom.text) || string.IsNullOrWhiteSpace(inputFieldRoom.text))
