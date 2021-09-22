@@ -9,7 +9,7 @@ public class Instantiator : MonoBehaviour
     [SerializeField] Transform spawnPoint;
     [SerializeField] string prefabName;
 
-    [SerializeField] NetManager netMgr;
+    //[SerializeField] NetManager netMgr;
     private void Start()
     {
         InstantiatePrefabs();
@@ -26,7 +26,7 @@ public class Instantiator : MonoBehaviour
     void InstantiatePrefabs()
     {
 
-            PhotonNetwork.Instantiate(prefabName, spawnPoint.transform.position, Quaternion.identity);
+            PhotonNetwork.Instantiate("ElSonic", spawnPoint.transform.position, Quaternion.identity);
             //return;
             //var nickName = PhotonNetwork.Instantiate("NickNamePrefab", point.position, point.rotation);
             //nickName.GetComponent<NickName>().SetNick(PhotonNetwork.LocalPlayer.NickName, obj);

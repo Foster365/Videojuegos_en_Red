@@ -7,17 +7,16 @@ using Photon.Realtime;
 
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+
 public class NetManager : MonoBehaviourPunCallbacks
 {
 
-    [SerializeField]
-    Button buttonConnect;
-    [SerializeField]
-    InputField inputFieldRoom;
-    [SerializeField]
-    InputField inputFieldNickName;
-    [SerializeField]
-    InputField inputFieldPlayersNumber;
+    [SerializeField] Button buttonConnect;
+    [SerializeField] InputField inputFieldRoom;
+    [SerializeField] InputField inputFieldNickName;
+    [SerializeField] InputField inputFieldPlayersNumber;
+    [SerializeField] InputField inputFieldCharacter;
+    public InputField InputFieldCharacter { get => inputFieldCharacter; set => inputFieldCharacter = value; }
 
     //List<string> nickNames;
 
@@ -47,6 +46,7 @@ public class NetManager : MonoBehaviourPunCallbacks
 
         if (string.IsNullOrWhiteSpace(inputFieldRoom.text) || string.IsNullOrEmpty(inputFieldRoom.text)) return;
         if (string.IsNullOrWhiteSpace(inputFieldNickName.text) || string.IsNullOrEmpty(inputFieldNickName.text)) return;
+        if (string.IsNullOrWhiteSpace(InputFieldCharacter.text) || string.IsNullOrEmpty(InputFieldCharacter.text)) return;
 
         PhotonNetwork.NickName = inputFieldNickName.text;
 
@@ -71,6 +71,8 @@ public class NetManager : MonoBehaviourPunCallbacks
         PhotonNetwork.JoinOrCreateRoom(roomName, options, TypedLobby.Default);
 
         buttonConnect.interactable = false;
+
+        //DontDestroyOnLoad(this.gameObject);
 
     }
 

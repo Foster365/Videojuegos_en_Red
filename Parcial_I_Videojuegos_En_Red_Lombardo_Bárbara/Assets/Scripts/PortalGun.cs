@@ -24,6 +24,7 @@ public class PortalGun : MonoBehaviour
         {
             targetCharacter.Score += points;
             scoreText.text = targetCharacter.Score.ToString();
+            Destroy(this.gameObject);
         }
 
     }

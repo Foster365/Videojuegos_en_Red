@@ -7,12 +7,21 @@ public class Character : MonoBehaviour //No uso Player porque Photon tiene una c
     [SerializeField]
     float speed;
     [SerializeField]
-    float jumpForce;
+    int initJumpForce;
     int score;
+
+    int jumpForce;
 
     Rigidbody rbody;
 
     public int Score { get => score; set => score = value; }
+    public int JumpForce { get => jumpForce; set => jumpForce = value; }
+
+    public int InitJumpForce { get => initJumpForce; set => initJumpForce = value; }
+    
+    private void Start() {
+        jumpForce = initJumpForce;
+    }
 
     private void Awake()
     {
