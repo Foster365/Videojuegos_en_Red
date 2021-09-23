@@ -18,7 +18,7 @@ public class Character : MonoBehaviour //No uso Player porque Photon tiene una c
     public int JumpForce { get => jumpForce; set => jumpForce = value; }
 
     public int InitJumpForce { get => initJumpForce; set => initJumpForce = value; }
-    
+
     private void Start() {
         jumpForce = initJumpForce;
     }
@@ -36,9 +36,16 @@ public class Character : MonoBehaviour //No uso Player porque Photon tiene una c
         rbody.velocity = dir;
     }
 
+    public bool CheckGround()
+    {
+        var isGrounded = Physics.Raycast(transform.position, -transform.up, 1 << LayerMask.NameToLayer(UtilitiesTags.GROUND_TAG)) ? true : false;
+        return isGrounded;
+    }
+
     public void Jump()
     {
-        rbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        if (CheckGround())
+            rbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
     }
 
 }

@@ -4,27 +4,20 @@ using UnityEngine;
 
 public class CharacterAnimations : MonoBehaviour
 {
-    Character character;
-    Animator animator;
+    [SerializeField] Character character;
+    [SerializeField] Animator animator;
 
-    public void MoveAnimation(float vel)
+    public void MoveAnimation(bool isMoving)
     {
-
+        animator.SetBool(CharacterAnimationTags.CHARACTER_MOVEMENT, isMoving);
     }
 
     public void JumpAnimation()
     {
-
+        animator.SetTrigger(CharacterAnimationTags.CHARACTER_JUMP);
     }
 
-    public void DamagedAnimation()
-    {
-
-    }
-
-    public void DeathAnimation()
-    {
-
-    }
+    //TODO Add: + Victory
+                //+ Defeat
 
 }

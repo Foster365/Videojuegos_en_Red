@@ -20,7 +20,7 @@ public class PortalGun : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
 
-        if (collision.gameObject.tag == "Character")
+        if (collision.gameObject.tag == CharacterTags.CHARACTER_TAG)
         {
             targetCharacter.Score += points;
             scoreText.text = targetCharacter.Score.ToString();

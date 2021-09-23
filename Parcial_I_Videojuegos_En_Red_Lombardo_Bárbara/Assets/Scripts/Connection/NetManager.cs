@@ -72,13 +72,23 @@ public class NetManager : MonoBehaviourPunCallbacks
 
         buttonConnect.interactable = false;
 
+        Room room = new Room(roomName, options);
+
+        if(room.PlayerCount >= 2)
+            ConnectGame();
+
         //DontDestroyOnLoad(this.gameObject);
 
     }
 
-    public override void OnJoinedRoom()
+    void ConnectGame()
     {
         PhotonNetwork.LoadLevel("Game"); //Usar esta función y no la de unity, porque la carga de manera local
+    }
+
+    public override void OnJoinedRoom()
+    {
+        ConnectGame();
     }
 
     public override void OnCreateRoomFailed(short returnCode, string message)
