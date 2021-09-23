@@ -20,7 +20,7 @@ Personajes:
 	Las esferas se destruyen cuando el player las toca, incrementan los puntos un determinado monto.
 	UI Menu (Botones de otro color, buscar fuentes en Google Fonts, Otros colores, otros colores de TextInput, fondo de
 	pantalla de menu)
-	Función CheckGround
+	Función CheckGround Ok
 CAMBIAR ANIMACIÓN SALTO
 
 Revisar settings de componentes Photon en los personajes y objetos que se sincronizan
