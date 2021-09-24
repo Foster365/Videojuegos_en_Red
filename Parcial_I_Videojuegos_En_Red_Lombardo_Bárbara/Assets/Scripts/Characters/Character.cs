@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Character : MonoBehaviour //No uso Player porque Photon tiene una clase llamada Player.
 {
@@ -8,6 +9,7 @@ public class Character : MonoBehaviour //No uso Player porque Photon tiene una c
     float speed;
     [SerializeField]
     int initJumpForce;
+    
     int score;
 
     int jumpForce;
@@ -18,6 +20,7 @@ public class Character : MonoBehaviour //No uso Player porque Photon tiene una c
     public int JumpForce { get => jumpForce; set => jumpForce = value; }
 
     public int InitJumpForce { get => initJumpForce; set => initJumpForce = value; }
+    public Rigidbody Rbody { get => rbody; set => rbody = value; }
 
     private void Start() {
         jumpForce = initJumpForce;
@@ -31,7 +34,8 @@ public class Character : MonoBehaviour //No uso Player porque Photon tiene una c
 
     public void Move(Vector3 dir)
     {
-        dir.x *= speed;
+        dir *= speed;
+        transform.forward = dir;
         dir.y = rbody.velocity.y;
         rbody.velocity = dir;
     }

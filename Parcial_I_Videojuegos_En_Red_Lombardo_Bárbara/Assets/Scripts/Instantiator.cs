@@ -26,7 +26,7 @@ public class Instantiator : MonoBehaviour
     void InstantiatePrefabs()
     {
 
-            PhotonNetwork.Instantiate("ElSonic", spawnPoint.transform.position, Quaternion.identity);
+            PhotonNetwork.Instantiate("Jammo_Player", spawnPoint.transform.position, Quaternion.identity);
             //return;
             //var nickName = PhotonNetwork.Instantiate("NickNamePrefab", point.position, point.rotation);
             //nickName.GetComponent<NickName>().SetNick(PhotonNetwork.LocalPlayer.NickName, obj);

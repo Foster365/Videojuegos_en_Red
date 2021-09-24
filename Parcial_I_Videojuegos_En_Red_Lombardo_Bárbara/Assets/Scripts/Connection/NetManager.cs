@@ -12,93 +12,67 @@ public class NetManager : MonoBehaviourPunCallbacks
 {
 
     [SerializeField] Button buttonConnect;
-    [SerializeField] InputField inputFieldRoom;
-    [SerializeField] InputField inputFieldNickName;
-    [SerializeField] InputField inputFieldPlayersNumber;
-    [SerializeField] InputField inputFieldCharacter;
-    public InputField InputFieldCharacter { get => inputFieldCharacter; set => inputFieldCharacter = value; }
+    [SerializeField] InputField inputFieldRoomName;
+    //[SerializeField] InputField inputFieldNickName;
+    [SerializeField] InputField inputFieldMaxPlayersNumber;
+    //[SerializeField] InputField inputFieldCharacter;
+    //public InputField InputFieldCharacter { get => inputFieldCharacter; set => inputFieldCharacter = value; }
 
-    //List<string> nickNames;
-
-    private void Start()
+    void Start()
     {
-
-        buttonConnect.interactable = false;
         PhotonNetwork.ConnectUsingSettings();
-
+        buttonConnect.interactable = false;
     }
-
-    public override void OnConnectedToMaster() //1
+    public override void OnConnectedToMaster()
     {
-        Debug.Log("Connected to master");
+        print("Connected to master");
         PhotonNetwork.JoinLobby();
     }
-
-    public override void OnJoinedLobby() //2
+    public override void OnJoinedLobby()
     {
         print("Connected to lobby");
         buttonConnect.interactable = true;
     }
-
-
     public void Connect()
     {
+        buttonConnect.interactable = false;
+        
 
-        if (string.IsNullOrWhiteSpace(inputFieldRoom.text) || string.IsNullOrEmpty(inputFieldRoom.text)) return;
-        if (string.IsNullOrWhiteSpace(inputFieldNickName.text) || string.IsNullOrEmpty(inputFieldNickName.text)) return;
-        if (string.IsNullOrWhiteSpace(InputFieldCharacter.text) || string.IsNullOrEmpty(InputFieldCharacter.text)) return;
-
-        PhotonNetwork.NickName = inputFieldNickName.text;
 
         RoomOptions options = new RoomOptions();
         options.IsOpen = true;
         options.IsVisible = true;
-
-        byte maxPlayers = 2;
-
-        if (byte.TryParse(inputFieldRoom.text, out maxPlayers)) options.MaxPlayers = maxPlayers;
-        else options.MaxPlayers = 2;
-
-        string roomName = "";
-        if (string.IsNullOrEmpty(inputFieldRoom.text) || string.IsNullOrWhiteSpace(inputFieldRoom.text))
+        byte maxPlayers;
+        if (byte.TryParse(inputFieldMaxPlayersNumber.text, out maxPlayers))
         {
-            roomName = "La Cueva del Marcianeke";
+            options.MaxPlayers = maxPlayers;
         }
         else
         {
-            roomName = inputFieldRoom.text;
+            options.MaxPlayers = 2;
+        }
+        string roomName = "";
+        if (string.IsNullOrEmpty(inputFieldRoomName.text) || string.IsNullOrWhiteSpace(inputFieldRoomName.text))
+        {
+            roomName = "La cueva del Marcianeke";
+        }
+        else
+        {
+            roomName = inputFieldRoomName.text;
         }
         PhotonNetwork.JoinOrCreateRoom(roomName, options, TypedLobby.Default);
-
-        buttonConnect.interactable = false;
-
-        Room room = new Room(roomName, options);
-
-        if(room.PlayerCount >= 2)
-            ConnectGame();
-
-        //DontDestroyOnLoad(this.gameObject);
-
     }
-
-    void ConnectGame()
-    {
-        PhotonNetwork.LoadLevel("Game"); //Usar esta función y no la de unity, porque la carga de manera local
-    }
-
-    public override void OnJoinedRoom()
-    {
-        ConnectGame();
-    }
-
     public override void OnCreateRoomFailed(short returnCode, string message)
     {
         buttonConnect.interactable = true;
     }
-
-    public override void OnJoinRandomFailed(short returnCode, string message)
+    public override void OnJoinRoomFailed(short returnCode, string message)
     {
         buttonConnect.interactable = true;
     }
-
+    public override void OnJoinedRoom()
+    {
+        print("Connected to Room");
+        PhotonNetwork.LoadLevel("Game");
+    }
 }

@@ -7,9 +7,9 @@ public class CharacterAnimations : MonoBehaviour
     [SerializeField] Character character;
     [SerializeField] Animator animator;
 
-    public void MoveAnimation(bool isMoving)
+    public void MoveAnimation(string floatName, float vel)
     {
-        animator.SetBool(CharacterAnimationTags.CHARACTER_MOVEMENT, isMoving);
+        animator.SetFloat(floatName, vel);
     }
 
     public void JumpAnimation()

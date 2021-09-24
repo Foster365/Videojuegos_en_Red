@@ -3310,7 +3310,7 @@ GameObject:
   - component: {fileID: 1522356441487500352}
   m_Layer: 0
   m_Name: Jammo_Player
-  m_TagString: Untagged
+  m_TagString: Character
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3466,6 +3466,9 @@ MonoBehaviour:
   - Type: 9
     SynchronizeType: 0
     Name: Character_Jump
+  - Type: 1
+    SynchronizeType: 0
+    Name: Character_Velocity
   m_SynchronizeLayers:
   - SynchronizeType: 0
     LayerIndex: 0
@@ -3481,8 +3484,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9467df811639494d9b40b483aa370df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
-  initJumpForce: 10
+  speed: 15
+  initJumpForce: 15
 --- !u!114 &8217383313974400973
 MonoBehaviour:
   m_ObjectHideFlags: 0

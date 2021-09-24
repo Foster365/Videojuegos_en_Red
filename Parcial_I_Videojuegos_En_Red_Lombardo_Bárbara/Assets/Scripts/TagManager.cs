@@ -5,9 +5,14 @@ using UnityEngine;
 public class CharacterAnimationTags
 {
 
-    public const string CHARACTER_MOVEMENT = "Character_isMoving";
+    public const string CHARACTER_MOVEMENT = "Character_Velocity";
     public const string CHARACTER_JUMP = "Character_Jump";
 
+}
+
+public class EntityAnimationTags
+{
+    public const string MUSHROOM_JUMP_COLLISION = "Mushroon_Jump_Collision";
 }
 
 public class CharacterTags

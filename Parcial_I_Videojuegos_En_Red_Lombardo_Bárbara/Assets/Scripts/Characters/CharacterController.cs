@@ -4,7 +4,6 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 
-
 public class CharacterController : MonoBehaviourPun
 {
 
@@ -14,15 +13,14 @@ public class CharacterController : MonoBehaviourPun
     private void Awake()
     {
 
-        if(!photonView.IsMine) //Uso PhotonView para corroborar que el controller es de mi player
+        if(!photonView.IsMine)
         {
 
-            //player.ChangeColor(Color.green);
             Destroy(this);
             return;
 
         }
-        //else player.ChangeColor(Color.green);
+
 
         player = GetComponent<Character>();
 
@@ -39,18 +37,38 @@ public class CharacterController : MonoBehaviourPun
         {
 
             Vector3 dir = new Vector3(h, 0, v);
-            characterAnim.MoveAnimation(true);
+            float characterVel = player.Rbody.velocity.magnitude;
+            photonView.RPC("SetCharacterVelocity", RpcTarget.All, characterVel);
+
             player.Move(dir.normalized);
 
         }
-        else characterAnim.MoveAnimation(false);
-        
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
-
+            photonView.RPC("SetCharacterJump", RpcTarget.All);
             player.Jump();
             characterAnim.JumpAnimation();
         }
 
+        //textPlayerScore.text = player.Score.ToString();
+
     }
+
+    #region PunRPC
+
+    [PunRPC]
+    public void SetCharacterVelocity(float vel)
+    {
+        characterAnim.MoveAnimation(CharacterAnimationTags.CHARACTER_MOVEMENT, vel);
+    }
+
+    [PunRPC]
+    public void SetCharacterJump()
+    {
+        characterAnim.JumpAnimation();
+    }
+
+    #endregion
+
 }

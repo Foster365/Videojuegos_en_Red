@@ -10,22 +10,35 @@ public class PortalGun : MonoBehaviour
     Character targetCharacter;
     Text scoreText;
 
-    private void Start()
+    private void Awake()
     {
-
-        targetCharacter = GameObject.FindGameObjectWithTag("Character").GetComponent<Character>();
 
     }
 
     private void OnCollisionEnter(Collision collision)
     {
 
-        if (collision.gameObject.tag == CharacterTags.CHARACTER_TAG)
+        //targetCharacter = GameObject.FindGameObjectWithTag("Character").gameObject.GetComponent<Character>();
+
+        if (collision.gameObject.tag == "Character")
         {
-            targetCharacter.Score += points;
-            scoreText.text = targetCharacter.Score.ToString();
-            Destroy(this.gameObject);
+            collision.gameObject.GetComponent<Character>().Score += points;
+            //scoreText.text = targetCharacter.Score.ToString();
+            Debug.Log("a");
+            Destroy(gameObject);
         }
 
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject == targetCharacter)
+            targetCharacter.transform.parent = transform;
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject == targetCharacter)
+            targetCharacter.transform.parent = null;
     }
 }
