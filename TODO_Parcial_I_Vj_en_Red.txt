@@ -21,7 +21,12 @@ Personajes:
 	UI Menu (Botones de otro color, buscar fuentes en Google Fonts, Otros colores, otros colores de TextInput, fondo de
 	pantalla de menu)
 	Función CheckGround Ok
-CAMBIAR ANIMACIÓN SALTO
+CAMBIAR ANIMACIÓN SALTO Ok
 
 Revisar settings de componentes Photon en los personajes y objetos que se sincronizan
+
+BUGS!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+Animaciones Rpc no se actualizan bien
+Animaciones no bien seteadas
 
