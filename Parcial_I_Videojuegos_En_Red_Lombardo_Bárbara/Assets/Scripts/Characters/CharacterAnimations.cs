@@ -17,7 +17,17 @@ public class CharacterAnimations : MonoBehaviour
         animator.SetTrigger(CharacterAnimationTags.CHARACTER_JUMP);
     }
 
+    public void WinAnimation()
+    {
+        animator.SetTrigger(CharacterAnimationTags.CHARACTER_WIN);
+    }
+
+    public void DefeatAnimation()
+    {
+        animator.SetTrigger(CharacterAnimationTags.CHARACTER_DEFEAT);
+    }
+
     //TODO Add: + Victory
-                //+ Defeat
+    //+ Defeat
 
 }

@@ -42,6 +42,11 @@ MonoBehaviour:
   - SetCharacterVelocity
   - SetCharacterJump
   - SetCharacterMovement
+  - Win
+  - UpdateCharacterScore
+  - Loser
+  - CheckLoser
+  - CheckWinner
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0

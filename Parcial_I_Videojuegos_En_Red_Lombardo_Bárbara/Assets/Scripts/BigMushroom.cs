@@ -6,7 +6,7 @@ public class BigMushroom : MonoBehaviour
 {
     [SerializeField] int jumpForceIncreaser;
     private void OnCollisionEnter(Collision other) {
-        if(other.gameObject.tag == "Character")
+        if(other.gameObject.tag == CharacterTags.CHARACTER_TAG)
         {
             other.gameObject.GetComponent<Character>().JumpForce += jumpForceIncreaser;
             other.gameObject.GetComponent<Character>().Jump();

@@ -51,6 +51,7 @@ public class NetManager : MonoBehaviourPunCallbacks
         {
             options.MaxPlayers = 2;
         }
+
         string roomName = "";
         if (string.IsNullOrEmpty(inputFieldRoomName.text) || string.IsNullOrWhiteSpace(inputFieldRoomName.text))
         {

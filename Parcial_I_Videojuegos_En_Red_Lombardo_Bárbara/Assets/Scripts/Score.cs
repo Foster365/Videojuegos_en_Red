@@ -1,18 +1,31 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using Photon.Pun;
+using TMPro;
 
-public class Score : MonoBehaviour
+public class Score : MonoBehaviourPun
 {
-    // Start is called before the first frame update
-    void Start()
+    //[SerializeField] TextMeshPro textScore;
+    [SerializeField] Text textCharacterScore;
+    GameObject character;
+
+    public void SetScore(string score, GameObject characterScore)
     {
-        
+        textCharacterScore.text = score;
+        character = characterScore;
+        photonView.RPC("UpdateCharacterScore", RpcTarget.OthersBuffered, score);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Update()
     {
-        
+
+    }
+
+    [PunRPC]
+    public void UpdateCharacterScore(string scoreText)
+    {
+        textCharacterScore.text = scoreText;
     }
 }

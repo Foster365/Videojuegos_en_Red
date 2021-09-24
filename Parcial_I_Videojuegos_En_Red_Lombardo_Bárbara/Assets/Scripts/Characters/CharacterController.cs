@@ -30,6 +30,8 @@ public class CharacterController : MonoBehaviourPun
     void Update()
     {
 
+        Debug.Log("Character score: "+ player.Score);
+
         var h = Input.GetAxis("Horizontal");
         var v = Input.GetAxis("Vertical");
 

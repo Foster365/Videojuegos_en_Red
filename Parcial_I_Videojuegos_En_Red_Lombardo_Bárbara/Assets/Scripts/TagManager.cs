@@ -7,6 +7,8 @@ public class CharacterAnimationTags
 
     public const string CHARACTER_MOVEMENT = "Character_Velocity";
     public const string CHARACTER_JUMP = "Character_Jump";
+    public const string CHARACTER_WIN = "Character_Win";
+    public const string CHARACTER_DEFEAT = "Character_Lose";
 
 }
 
