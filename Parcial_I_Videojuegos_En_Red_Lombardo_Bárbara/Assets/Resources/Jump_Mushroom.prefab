@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 995055391687429876}
   - component: {fileID: 745840992339922805}
   - component: {fileID: 5110051589170268689}
+  - component: {fileID: 9005820664066223036}
+  - component: {fileID: 4017645864367435887}
   m_Layer: 0
   m_Name: Jump_Mushroom
   m_TagString: Untagged
@@ -138,6 +140,31 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &9005820664066223036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 745840991725041004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: daebb67591f9992408d047dd97e62540, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jumpForceIncreaser: 5
+--- !u!114 &4017645864367435887
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 745840991725041004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf7e3662b73c3d04fbacec396da9cb56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1257902293092162795
 GameObject:
   m_ObjectHideFlags: 0

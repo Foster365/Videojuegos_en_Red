@@ -16,7 +16,7 @@ public class CharacterController : MonoBehaviourPun
         if(!photonView.IsMine)
         {
 
-            Destroy(this);
+            //Destroy(this);
             return;
 
         }

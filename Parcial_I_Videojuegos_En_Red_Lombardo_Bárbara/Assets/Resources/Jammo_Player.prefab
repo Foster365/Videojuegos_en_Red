@@ -3488,7 +3488,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 15
-  initJumpForce: 25
+  initJumpForce: 10
 --- !u!114 &8217383313974400973
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3514,7 +3514,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5331f8982bd7a5448b20232b6504c0ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  character: {fileID: 7167669893245542318}
   animator: {fileID: 911527019455473630}
 --- !u!1 &6145119567111833070
 GameObject:

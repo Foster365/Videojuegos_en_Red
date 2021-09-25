@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CharacterAnimations : MonoBehaviour
 {
-    [SerializeField] Character character;
+    //[SerializeField] Character character;
     [SerializeField] Animator animator;
 
     public void MoveAnimation(string floatName, float vel)

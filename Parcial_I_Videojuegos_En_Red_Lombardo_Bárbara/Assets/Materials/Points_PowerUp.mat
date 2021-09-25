@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Ball_Fresnel
+  m_Name: Points_PowerUp
   m_Shader: {fileID: 4800000, guid: d84c511579f0a20498dc37576626fedf, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 0
@@ -44,7 +44,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Material_Base_Texture:
-        m_Texture: {fileID: 2800000, guid: 13548d8d0fcb5c44b8044ce08a99c697, type: 3}
+        m_Texture: {fileID: 2800000, guid: 761ff1491b1f86c4d924261c553ac9cc, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -86,4 +86,4 @@ Material:
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _FresnelColor: {r: 0, g: 7.999999, b: 6.17419, a: 1}
+    - _FresnelColor: {r: 2.4293191, g: 10.680627, b: 0.20942406, a: 1}

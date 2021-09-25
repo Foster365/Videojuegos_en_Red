@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
+using Photon.Realtime;
 
 public class SpawnManager : MonoBehaviour
 {
@@ -11,9 +13,9 @@ public class SpawnManager : MonoBehaviour
     //
 
     [SerializeField] GameObject[] prefabs;
-    float spawn = 1f;
+    float spawn = 1.5f;
     float timer = 0;
-    int maxPortalGunsQuantity = 5;
+    int maxPortalGunsQuantity = 40;
     //
 
     //Portal Gun Prototype
@@ -24,12 +26,6 @@ public class SpawnManager : MonoBehaviour
     private void Awake()
     {
         _transform = GetComponent<Transform>();
-    }
-
-    private void Start()
-    {
-        //portalGunSpawner = new PortalGunSpawner();
-
     }
 
     private void Update()
@@ -72,12 +68,12 @@ public class SpawnManager : MonoBehaviour
     #region Portal_Gun_Prototype
     void CreatePortalGun()
     {
-        var randomPos = new Vector3(Random.Range(-30, 30), 47, 0);
+        var randomPos = new Vector3(Random.Range(-30, 30), 47, 2f);
         //Vector3 initPosition = transform.position;
         //Vector3 currPosition = initPosition;
         if (maxPortalGunsQuantity >= 0)
         {
-            GameObject.Instantiate(portalGunPrefab, randomPos, transform.rotation);
+            PhotonNetwork.Instantiate("Portal_Gun_B", randomPos, transform.rotation);
             //GameObject.Destroy(portalGunPrefab, 3f);
             //healthBoxPrefab.transform.position *= 5f;
             maxPortalGunsQuantity--;
