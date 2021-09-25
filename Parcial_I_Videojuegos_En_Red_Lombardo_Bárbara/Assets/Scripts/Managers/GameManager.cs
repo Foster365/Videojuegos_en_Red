@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviourPun
     // Start is called before the first frame update
     void Start()
     {
-
+        //Seguir la cuenta de manera local. QUe solo el masterclient haga los eventos al terminar el contador. Cada cierto t debe enviar el tiempo
         gameTimer = maxGameTimer;
         textGameCounter.text = gameTimer.ToString();
         var character = PhotonNetwork.LocalPlayer;

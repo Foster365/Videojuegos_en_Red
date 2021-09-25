@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using Photon.Pun;
+using Photon.Realtime;
 
-public class PortalGun : MonoBehaviour
+public class PortalGun : MonoBehaviourPun
 {
 
     [SerializeField]
@@ -10,22 +12,17 @@ public class PortalGun : MonoBehaviour
     Character targetCharacter;
     Text scoreText;
 
-    private void Awake()
-    {
-
-    }
-
     private void OnCollisionEnter(Collision collision)
     {
 
         //targetCharacter = GameObject.FindGameObjectWithTag("Character").gameObject.GetComponent<Character>();
 
-        if (collision.gameObject.tag == "Character")
+        if (collision.gameObject.tag == "Character" && photonView.IsMine)
         {
             collision.gameObject.GetComponent<Character>().Score += points;
             //scoreText.text = targetCharacter.Score.ToString();
             Debug.Log("a");
-            Destroy(gameObject);
+            PhotonNetwork.Destroy(gameObject);
         }
 
     }

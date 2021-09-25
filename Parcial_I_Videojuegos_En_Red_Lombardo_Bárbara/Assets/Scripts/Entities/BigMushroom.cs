@@ -10,7 +10,7 @@ public class BigMushroom : MonoBehaviourPun
     [SerializeField] MushroomAnimations mushroomAnimations;
 
     private void OnCollisionEnter(Collision other) {
-        if(other.gameObject.tag == CharacterTags.CHARACTER_TAG)
+        if(other.gameObject.tag == CharacterTags.CHARACTER_TAG && photonView.IsMine)
         {
             other.gameObject.GetComponent<Character>().JumpForce += jumpForceIncreaser;
             photonView.RPC("PlayerJump", RpcTarget.All, other.gameObject);

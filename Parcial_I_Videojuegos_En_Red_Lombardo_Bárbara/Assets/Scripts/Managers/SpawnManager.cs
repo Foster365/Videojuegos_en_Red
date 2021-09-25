@@ -73,6 +73,7 @@ public class SpawnManager : MonoBehaviour
         //Vector3 currPosition = initPosition;
         if (maxPortalGunsQuantity >= 0)
         {
+            //Que solo un cliente ejecute esta función.
             PhotonNetwork.Instantiate("Portal_Gun_B", randomPos, transform.rotation);
             //GameObject.Destroy(portalGunPrefab, 3f);
             //healthBoxPrefab.transform.position *= 5f;
