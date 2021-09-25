@@ -11,7 +11,7 @@ Personajes:
 	Objetos que caen, con colisión, que otorgan una
 	determinada cantidad de puntos a quien los obtiene Ok
 
-	Platform animations. Ok1
+	Platform animations. Ok
 	Poner animaciones personajes y ponerlos en Resources
 	Salto más grande cuando toco al hongo. Script hecho, adjuntarlo al gameObject. Ok
 	Timer tiempo juego en formato minuto ("mm:ss")
@@ -19,7 +19,7 @@ Personajes:
 	Pared invisible en el nivel que no deje que el player se caiga.
 	Las esferas se destruyen cuando el player las toca, incrementan los puntos un determinado monto. Ok, falta mostrar puntos (Incrementar el txt)
 	UI Menu (Botones de otro color, buscar fuentes en Google Fonts, Otros colores, otros colores de TextInput, fondo de
-	pantalla de menu)
+	pantalla de menu) Ok
 	Función CheckGround Ok
 CAMBIAR ANIMACIÓN SALTO Ok
 
