@@ -1,0 +1,42 @@
+TO DO:
+
+	+ Setear waypoints en los caminos.
+	+ Setear waypoints en los patrullajes de las naves.
+	
+-> Personajes:
+	+ Setear prefabs (Collider, Rigidbody, Animator, Photon View, Photon Rigidbody View, Photon Animation View).
+	+ Hacer scripts (Character, Character Anim, Character Controller).
+	+ Setear Animator (Al menos sin anim por ahora).
+	+ Setear Spawner de pj's (Array con un random, evitando que se repitan) -> Voy a tener un gameobject spawner que va a contener los 4 players
+con los spawnpoints y nodos seteados (El spawnpoint va a ser el nodo 0), voy a setear un booleano en el script CharacterHY que me va a indicar si
+este pj fué spawneado, y cada vez que spawnee uno (Desde el spawner o servidor, ver eso) con un foreach, luego de ejecutar PhotonNetwork.Instantiate()
+voy a setear ese bool de ese pj (pos/item del foreach) en true.
+seteo un array de strings, si el nombre coincide con el nombre en el método de PhotonNetwork.Instantiate() instancio ese, o puedo recorrer el 
+array de strings y acceder de alguna forma al gameobject, para acceder al isspawn del prefab (Ver eso, aunque no creo que sea la solución, porque es muy
+rebuscado)
+
+-> Dado:
+	+ Buscar prefab dado/Solucionarlo con una UI y un botón que accione la ruleta.
+	+ Hacer Scripts (Dice, Dice Controller).
+
+Las naves se pueden reemplazar con baldosas que giren sobre el lugar, y me hagan retroceder un casillero.
+
+-> Setear condición de no arrancar hasta no tener 4 players.
+	+ Pantalla gris con medio alpha.
+	+ Inhabilitar UI y controlles. Condición en el GM y el Server.
+	+ Podemos crear un lobby (Otra escena con texto, indicando la cant de players que hay y faltan para empezar, que me permita apretar un botón de
+	iniciar al cumplir la condición, o dejarlo solo y que me redirija automáticamente) -> Mejor opción, más rápida.
+
+	Lobby -> Objeto Lobby Manager con script LobbyManager.
+		+ Va a tener un canvas con un texto que me indique la cantidad de players que hay, en comparación con el máx.
+		+ El script LobbyManager (MonoBehaviourPun, con las librerías Photon.Pun, Photon.Realtime) va a tener una referencia del SplashScreen
+		(El NetManager va a ser Don't Destroy on Load), la cual me va a indicar (Tanto al script como a la UI, con la librería UnityEngine.UI)
+		la cantidad de players que hay conectados.
+		+ Al cumplirse la condición me va a dirigir al juego (Con SceneManagement, con la librería UnityEngine.SceneManagement).
+
+-> Photon Chat:
+	+ Scripts.
+	+ UI.
+-> Photon Voice:
+	+ Scripts.
+	+ UI.

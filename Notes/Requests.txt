@@ -1,0 +1,14 @@
+Movimiento
+Nodos en el camino. Cada vez que acciona la tecla de movimiento se mueve un casillero. getkey si el nodo es el correcto avanzo. Move if currentnode is
+el correcto.
+
+Respawn
+Según la condición de respawn (Se cae o muere con una torreta) va a respawnear en determinado nodo (transform position del player va a ser el
+del respawn point)
+
+Preguntar si puedo hacer request de las animaciones (Teniendo en cuenta que va a moverse localmente no, pero de última puedo moverlo por servidor)
+
+Lanzar Dado
+
+Emitir respuesta. (El DiceController realizaría el request, y me devolvería un nro. Este número iría al CharacterController y me indicaría la cantidad de
+casilleros a avanzar.

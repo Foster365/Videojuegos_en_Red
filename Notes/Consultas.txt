@@ -1,0 +1,7 @@
+
+Preguntar si puedo hacer request de las animaciones (Teniendo en cuenta que va a moverse localmente no, pero de última puedo moverlo por servidor)
+
+Preguntar si puedo hacer un "Master Controller" que le envíe las peticiones al servidor, en vez de realizarlas controlador por controlador (Lo cual me
+hace realizarlas de forma más dispersa).
+Preguntar, en el caso de que se pueda hacer el Master Controller, cómo sería ese controller. Tendría referencias de todos los controllers, pero
+luego de eso cómo seguiría. (Hago otra referencia al local y server, las paso del Character Controller al Master Controller)

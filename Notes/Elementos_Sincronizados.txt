@@ -1,0 +1,8 @@
+Elementos que se sincronizan:
+	+ Players.
+	+ Dado.
+	+ Torretas.
+	+ Baldosas:
+		   -> Rotativas.
+		   -> Flotantes (Alrededor del hexágono grande).
+	+ Granada.

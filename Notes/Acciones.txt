@@ -1,0 +1,15 @@
+Acciones:
+
+Player:
+	Spawnear (Servidor)
+	Moverme (Requiere animación)
+	Morir (Requiere animación)
+	Ganar (Requiere animación)
+
+Dado:
+	Tirar. (Puede no requerir animación, y hacerse con una rotación sobre el lugar (v_angular y la pos fija).
+	Enviar resultado (Dice Controller)
+
+Naves:
+	Patrullar.
+	Atacar.
