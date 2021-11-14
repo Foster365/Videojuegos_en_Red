@@ -1,6 +1,6 @@
 TO DO:
 
-	+ Setear waypoints en los caminos.
+	+ Setear waypoints en los caminos. OK
 	+ Setear waypoints en los patrullajes de las naves.
 	
 -> Personajes:
@@ -40,3 +40,4 @@ Las naves se pueden reemplazar con baldosas que giren sobre el lugar, y me hagan
 -> Photon Voice:
 	+ Scripts.
 	+ UI.
+-> Volver a setear el número de players en 4 (En Lobby Manager)

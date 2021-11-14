@@ -26,8 +26,8 @@ public class CharacterControllerHY : MonoBehaviour
         if (gameServer == null) Debug.Log("Game Server is null");
         else if (localPlayer == null) Debug.Log("Local Player is null");
         else if (clientServer == null) Debug.Log("Client Server is null");
-        gameServer.photonView.RPC("InitializePlayer", localPlayer, localPlayer);
-        //PlayerInitializationServerRequests();
+        //gameServer.photonView.RPC("InitializePlayer", clientServer, localPlayer);
+        PlayerInitializationServerRequests();
 
     }
 
