@@ -21,6 +21,9 @@ public class GameServer : MonoBehaviourPun
     private void Start()
     {
         spawnPoints = GameObject.FindGameObjectsWithTag("SpawnPoint");
+
+        Debug.Log("Player nickname" + PhotonNetwork.NickName);
+
     }
 
     private void Awake()

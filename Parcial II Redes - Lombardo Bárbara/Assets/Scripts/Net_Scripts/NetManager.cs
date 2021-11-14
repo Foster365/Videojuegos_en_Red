@@ -5,13 +5,15 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+using TMPro;
+
 using Photon.Pun;
 using Photon.Realtime;
 
 public class NetManager : MonoBehaviourPunCallbacks
 {
 
-    InputField playerName; //TODO Revisar si al final voy a usar nicknames en los players
+    [SerializeField] TMP_InputField playerNickname;
     [SerializeField] Button startGameButton;
 
     void Start()
@@ -37,6 +39,8 @@ public class NetManager : MonoBehaviourPunCallbacks
 
         startGameButton.interactable = true;
 
+        PhotonNetwork.NickName = playerNickname.text;
+
         //if (string.IsNullOrEmpty(playerName.text) || string.IsNullOrWhiteSpace(playerName.text))
         //    PhotonNetwork.NickName = "Salame que no se puso el nombre";
         ////Hacer que vuelva a tipear, mostrar en pantalla que el nombre está vacío
@@ -48,7 +52,7 @@ public class NetManager : MonoBehaviourPunCallbacks
         //options.IsOpen = true;
         //options.IsVisible = true;
         options.MaxPlayers = 4;
-        PhotonNetwork.JoinOrCreateRoom("BoardGameRoom", options, TypedLobby.Default); // Me conecto a la sala con el nombre "BoardGameRoom" o
+        PhotonNetwork.JoinOrCreateRoom("Lobby", options, TypedLobby.Default); // Me conecto a la sala con el nombre "BoardGameRoom" o
                                                                                       // creo una, utilizando esos settings
 
     }
