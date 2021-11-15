@@ -16,6 +16,8 @@ public class CharacterControllerHY : MonoBehaviour
     int squaresCount = 0;
     int diceSquaresAmount;
 
+    PhotonChatController chatManager;
+    bool isLocked;
 
     private void Start()
     {
@@ -29,13 +31,24 @@ public class CharacterControllerHY : MonoBehaviour
         //gameServer.photonView.RPC("InitializePlayer", clientServer, localPlayer);
         PlayerInitializationServerRequests();
 
+        if (gameServer.photonView.IsMine)
+        {
+            chatManager = FindObjectOfType<PhotonChatController>();
+        }
+
+        if(chatManager)
+        {
+            chatManager.OnSelect += () => isLocked = true;
+            chatManager.OnDeselect += () => isLocked = false;
+        }
+
     }
 
     private void Update()
     {
 
         if (character == null) return;
-
+        if (isLocked) return;
         Vector3 dir = transform.forward;
 
         if (Input.GetKey(KeyCode.W)) gameServer.photonView.RPC("RequestMove", localPlayer, localPlayer, dir);

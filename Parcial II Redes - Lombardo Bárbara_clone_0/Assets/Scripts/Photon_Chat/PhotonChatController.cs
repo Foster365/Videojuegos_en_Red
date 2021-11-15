@@ -1,7 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
+using UnityEngine.EventSystems;
 using UnityEngine;
+using UnityEngine.UI;
 
 using Photon.Chat;
 using ExitGames.Client.Photon;
@@ -15,6 +18,9 @@ public class PhotonChatController : MonoBehaviour, IChatClientListener
     [SerializeField] TextMeshProUGUI chatLineContent;
     [SerializeField] TMP_InputField messageInputField;
 
+    [SerializeField] ScrollRect chatScroll;
+    float limitScrollAutomation = .2f;
+
     ChatClient playerChatClient; //Me sirve para mandar mensajes, actualizar el estado de mi chat, enviar mensajes privados
     //[SerializeField] string playerUserId;
 
@@ -24,6 +30,9 @@ public class PhotonChatController : MonoBehaviour, IChatClientListener
     int currentChat;
 
     Dictionary<string, int> chatsDictionary = new Dictionary<string, int>();
+
+    public Action OnSelect = delegate { };
+    public Action OnDeselect = delegate { };
 
     private void Start()
     {
@@ -72,7 +81,18 @@ public class PhotonChatController : MonoBehaviour, IChatClientListener
     {
 
         chatLineContent.text = chats[currentChat];
+        //Compruebo si tengo que hacer scroll o no cuando se actualiza el chat.
+        if(chatScroll.verticalNormalizedPosition < limitScrollAutomation)
+        {
+            StartCoroutine(WaitToScroll());
+        }
 
+    }
+
+    IEnumerator WaitToScroll()
+    {
+        yield return new WaitForEndOfFrame();
+        chatScroll.verticalNormalizedPosition = 0;
     }
 
     public void SendPlayerMessage()
@@ -81,6 +101,9 @@ public class PhotonChatController : MonoBehaviour, IChatClientListener
         if (string.IsNullOrEmpty(messageInputField.text) || string.IsNullOrWhiteSpace(messageInputField.text)) return;
         Debug.Log("Send Player Message: Input Field is not null or white, and it doesn't have any empty space");
         playerChatClient.PublishMessage(channels[currentChat], messageInputField.text);
+        messageInputField.text = ""; //Cuando termino de mandar el mensaje borro la línea
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(messageInputField .gameObject);
 
     }
 
@@ -111,8 +134,12 @@ public class PhotonChatController : MonoBehaviour, IChatClientListener
         for (int i = 0; i < senders.Length; i++)
         {
 
-            int indexChat = chatsDictionary[channelName];
-            chats[indexChat] += senders[i] + ": " + messages[i] + "\n";
+            string messageColor;
+
+            if (senders[i] == PhotonNetwork.NickName) messageColor = "<color=cyan>";
+            else messageColor = "<color=yellow>";
+                int indexChat = chatsDictionary[channelName];
+            chats[indexChat] += messageColor + senders[i] + ": " + "</color>" + messages[i] + "\n";
 
         }
         UpdateChatUI();
@@ -133,7 +160,7 @@ public class PhotonChatController : MonoBehaviour, IChatClientListener
         for (int i = 0; i < channels.Length; i++)//Dinujo las líneas que se escriban en el chat
         {
             //chatLineContent.text += channels[i] + "\n"; //Cuando escriba una nueva linea se va a dibujar debajo
-            chats[0] += "color=blue>"+ PhotonNetwork.NickName + " hooped into channel: " + channels[i] + "! :)" + "</color>" + "\n";
+            chats[0] += "<color=magenta>"+ PhotonNetwork.NickName + " hooped into channel: " + channels[i] + "! :)" + "</color>" + "\n";
         }
 
         UpdateChatUI();
@@ -155,6 +182,16 @@ public class PhotonChatController : MonoBehaviour, IChatClientListener
     public void OnUserUnsubscribed(string channel, string user)
     {
         Debug.Log("On User Unsuscribed not implemented yet");
+    }
+
+    public void SelectChat()
+    {
+        OnSelect();
+    }
+
+    public void DeselectChat()
+    {
+        OnDeselect();
     }
 
 }
