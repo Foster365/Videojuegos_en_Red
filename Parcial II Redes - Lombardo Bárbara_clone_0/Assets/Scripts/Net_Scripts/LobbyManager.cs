@@ -34,7 +34,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         if(PhotonNetwork.IsMasterClient)
         {
             var playerCount = PhotonNetwork.CurrentRoom.PlayerCount;
-            if (playerCount == 2)
+            if (playerCount == 3)
                 photonView.RPC("LoadLevel", RpcTarget.All);
         }
 

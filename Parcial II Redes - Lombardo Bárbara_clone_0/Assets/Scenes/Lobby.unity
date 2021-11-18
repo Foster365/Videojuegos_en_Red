@@ -1029,6 +1029,11 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4662814216376350947, guid: 24f99f0635054094c8c85450aa15f26d,
+        type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4662814216492715117, guid: 24f99f0635054094c8c85450aa15f26d,
         type: 3}
       propertyPath: m_fontSize
@@ -1047,32 +1052,37 @@ PrefabInstance:
     - target: {fileID: 4662814216492715117, guid: 24f99f0635054094c8c85450aa15f26d,
         type: 3}
       propertyPath: m_textInfo.characterCount
-      value: 32
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4662814216492715117, guid: 24f99f0635054094c8c85450aa15f26d,
         type: 3}
       propertyPath: m_textInfo.wordCount
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4662814216492715117, guid: 24f99f0635054094c8c85450aa15f26d,
         type: 3}
       propertyPath: m_textInfo.lineCount
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4662814216492715117, guid: 24f99f0635054094c8c85450aa15f26d,
         type: 3}
       propertyPath: m_textInfo.pageCount
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4662814216492715410, guid: 24f99f0635054094c8c85450aa15f26d,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: -217.416
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4662814216492715410, guid: 24f99f0635054094c8c85450aa15f26d,
         type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4662814216492715410, guid: 24f99f0635054094c8c85450aa15f26d,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.000038146973
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 24f99f0635054094c8c85450aa15f26d, type: 3}

@@ -46,6 +46,8 @@ MonoBehaviour:
   - LoadLevel
   - RequestAnim
   - RequestGotoWaypoint
+  - PlayerGameOverCallback
+  - PlayerWinCallback
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

@@ -28,6 +28,7 @@ public class PhotonChatController : MonoBehaviour, IChatClientListener
     string[] chats;
 
     int currentChat;
+    int maxChatLines = 3;
 
     Dictionary<string, int> chatsDictionary = new Dictionary<string, int>();
 
@@ -81,8 +82,14 @@ public class PhotonChatController : MonoBehaviour, IChatClientListener
     {
 
         chatLineContent.text = chats[currentChat];
+
+        if(chatLineContent.textInfo.lineCount >= maxChatLines)
+        {
+            StartCoroutine(WaitToDeleteLine());
+        }
+
         //Compruebo si tengo que hacer scroll o no cuando se actualiza el chat.
-        if(chatScroll.verticalNormalizedPosition < limitScrollAutomation)
+        if (chatScroll.verticalNormalizedPosition < limitScrollAutomation)
         {
             StartCoroutine(WaitToScroll());
         }
@@ -95,12 +102,38 @@ public class PhotonChatController : MonoBehaviour, IChatClientListener
         chatScroll.verticalNormalizedPosition = 0;
     }
 
+    IEnumerator WaitToDeleteLine()
+    {
+        yield return new WaitForEndOfFrame();
+
+        if (chatLineContent.textInfo.lineCount > maxChatLines + 1)
+        {
+            for (int i = 0; i < chatLineContent.textInfo.lineCount - maxChatLines; i++)
+            {
+
+                var index = chats[currentChat].IndexOf("\n"); //Obtengo el índice del primer salto del línea, para poder cortar el string, diciéndole en qué índice quiero que empiece
+                chats[currentChat] = chats[currentChat].Substring(index + 1);
+
+                chatLineContent.text = chats[currentChat];
+            }
+        }
+
+    }
+
     public void SendPlayerMessage()
     {
 
         if (string.IsNullOrEmpty(messageInputField.text) || string.IsNullOrWhiteSpace(messageInputField.text)) return;
         Debug.Log("Send Player Message: Input Field is not null or white, and it doesn't have any empty space");
-        playerChatClient.PublishMessage(channels[currentChat], messageInputField.text);
+
+        //Private Message
+        string[] messageWords = messageInputField.text.Split(' ');
+        if (messageWords[0] == "/w" && messageWords.Length > 2)
+        {
+            playerChatClient.SendPrivateMessage(messageWords[1], string.Join(" ", messageWords, 2, messageWords.Length - 2));
+        }
+        else playerChatClient.PublishMessage(channels[currentChat], messageInputField.text);
+        //
         messageInputField.text = ""; //Cuando termino de mandar el mensaje borro la línea
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(messageInputField .gameObject);
@@ -134,12 +167,12 @@ public class PhotonChatController : MonoBehaviour, IChatClientListener
         for (int i = 0; i < senders.Length; i++)
         {
 
-            string messageColor;
+            string color;
 
-            if (senders[i] == PhotonNetwork.NickName) messageColor = "<color=cyan>";
-            else messageColor = "<color=yellow>";
+            if (senders[i] == PhotonNetwork.NickName) color = "<color=yellow>";
+            else color = "<color=orange>";
                 int indexChat = chatsDictionary[channelName];
-            chats[indexChat] += messageColor + senders[i] + ": " + "</color>" + messages[i] + "\n";
+            chats[indexChat] += color + senders[i] + ": " + "</color>" + messages[i] + "\n";
 
         }
         UpdateChatUI();
@@ -147,7 +180,11 @@ public class PhotonChatController : MonoBehaviour, IChatClientListener
 
     public void OnPrivateMessage(string sender, object message, string channelName)
     {
-        Debug.Log("On Private Message not implemented yet");
+        for (int i = 0; i < chats.Length; i++)
+        {
+            chats[i] += "<color=green>" + sender + ": " + "</color>" + message + "\n";
+        }
+        UpdateChatUI();
     }
 
     public void OnStatusUpdate(string user, int status, bool gotMessage, object message)
@@ -160,7 +197,7 @@ public class PhotonChatController : MonoBehaviour, IChatClientListener
         for (int i = 0; i < channels.Length; i++)//Dinujo las líneas que se escriban en el chat
         {
             //chatLineContent.text += channels[i] + "\n"; //Cuando escriba una nueva linea se va a dibujar debajo
-            chats[0] += "<color=magenta>"+ PhotonNetwork.NickName + " hooped into channel: " + channels[i] + "! :)" + "</color>" + "\n";
+            chats[0] += "<color=red>"+ PhotonNetwork.NickName + " hooped into channel: " + channels[i] + "! :)" + "</color>" + "\n";
         }
 
         UpdateChatUI();

@@ -36406,7 +36406,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdfd0e5b6e2071444b8f88768e8d9767, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerUserId: Foster
+  chatLineContent: {fileID: 0}
+  messageInputField: {fileID: 0}
+  chatScroll: {fileID: 0}
 --- !u!4 &1061804235
 Transform:
   m_ObjectHideFlags: 0
@@ -77242,6 +77244,11 @@ PrefabInstance:
         type: 3}
       propertyPath: sceneViewId
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2674373831825462405, guid: afc01d7ce9065254190111449c9ef617,
+        type: 3}
+      propertyPath: m_SynchronizeAngularVelocity
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8161046518547868664, guid: afc01d7ce9065254190111449c9ef617,
         type: 3}
