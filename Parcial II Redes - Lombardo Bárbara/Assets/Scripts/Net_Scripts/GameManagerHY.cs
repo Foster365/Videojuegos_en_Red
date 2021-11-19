@@ -16,7 +16,7 @@ public class GameManagerHY : MonoBehaviourPun
     private void Start()
     {
         client = PhotonNetwork.LocalPlayer;
-        grenade = GameObject.FindWithTag("Grenade_Win_Trigger").GetComponent<Frag_Grenade>();
+        //grenade = GameObject.FindWithTag("Grenade_Win_Trigger").GetComponent<Frag_Grenade>();
     }
 
     public void Win()

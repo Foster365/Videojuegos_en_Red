@@ -49,7 +49,7 @@ public class PhotonChatController : MonoBehaviour, IChatClientListener
 
         //GetChannels();
 
-        Debug.Log("La cueva del marcianeke ha sido abierta, enemigos del heredero temed");
+        //Debug.Log("La cueva del marcianeke ha sido abierta, enemigos del heredero temed");
         playerChatClient = new ChatClient(this); // Va a tomar como referencia esta clase para reproducir las funciones de la inter
         playerChatClient.Connect(PhotonNetwork.PhotonServerSettings.AppSettings.AppIdChat, PhotonNetwork.AppVersion,
         new AuthenticationValues(PhotonNetwork.LocalPlayer.NickName)); // Los nicknames se pueden repetir, cuando pueda hacer una base de datos que almacene
@@ -59,7 +59,7 @@ public class PhotonChatController : MonoBehaviour, IChatClientListener
 
     void GetChannels()
     {
-        Debug.Log("IS WORKING!");
+        //Debug.Log("IS WORKING!");
 
         int dictIndex = 0;
         for (var i = 0; i < channels.Length; i++)
@@ -68,7 +68,7 @@ public class PhotonChatController : MonoBehaviour, IChatClientListener
             chatsDictionary[channels[i]] = dictIndex;
             dictIndex++;
 
-            Debug.Log("Chat Dictionary value: " + chatsDictionary[channels[i]]);
+            //Debug.Log("Chat Dictionary value: " + chatsDictionary[channels[i]]);
         }
     }
 
@@ -124,7 +124,7 @@ public class PhotonChatController : MonoBehaviour, IChatClientListener
     {
 
         if (string.IsNullOrEmpty(messageInputField.text) || string.IsNullOrWhiteSpace(messageInputField.text)) return;
-        Debug.Log("Send Player Message: Input Field is not null or white, and it doesn't have any empty space");
+        //Debug.Log("Send Player Message: Input Field is not null or white, and it doesn't have any empty space");
 
         //Private Message
         string[] messageWords = messageInputField.text.Split(' ');
@@ -142,28 +142,28 @@ public class PhotonChatController : MonoBehaviour, IChatClientListener
 
     public void DebugReturn(DebugLevel level, string message)
     {
-        Debug.Log("Debug Return yet not implemented yet");
+        //Debug.Log("Debug Return yet not implemented yet");
     }
 
     public void OnChatStateChange(ChatState state)
     {
-        Debug.Log("On State Change not implemented yet");
+        //Debug.Log("On State Change not implemented yet");
     }
 
     public void OnConnected()
     {
-        Debug.Log("Chat Connected");
+        //Debug.Log("Chat Connected");
         playerChatClient.Subscribe(channels); // Me suscribo a los canales
     }
 
     public void OnDisconnected()
     {
-        Debug.Log("Chat Disconnected");
+        //Debug.Log("Chat Disconnected");
     }
 
     public void OnGetMessages(string channelName, string[] senders, object[] messages) //El sender y el messaje comparten index. El sender en [0] tiene el message en [0]
     {
-        Debug.Log("On Get Messages is working");
+        //Debug.Log("On Get Messages is working");
         for (int i = 0; i < senders.Length; i++)
         {
 
@@ -189,7 +189,7 @@ public class PhotonChatController : MonoBehaviour, IChatClientListener
 
     public void OnStatusUpdate(string user, int status, bool gotMessage, object message)
     {
-        Debug.Log("On Status Update not implemented yet");
+        //Debug.Log("On Status Update not implemented yet");
     }
 
     public void OnSubscribed(string[] channels, bool[] results)
@@ -208,17 +208,17 @@ public class PhotonChatController : MonoBehaviour, IChatClientListener
                                                   //cierto tiempo), cuando se actualice me va a devolver todos los canales a los que me desuscribí
     {
 
-        Debug.Log("On Unsuscribed not implemented yet");
+        //Debug.Log("On Unsuscribed not implemented yet");
     }
 
     public void OnUserSubscribed(string channel, string user)
     {
-        Debug.Log("On User Suscribed not implemented yet");
+        //Debug.Log("On User Suscribed not implemented yet");
     }
 
     public void OnUserUnsubscribed(string channel, string user)
     {
-        Debug.Log("On User Unsuscribed not implemented yet");
+        //Debug.Log("On User Unsuscribed not implemented yet");
     }
 
     public void SelectChat()

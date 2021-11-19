@@ -14,11 +14,11 @@ using Photon.Realtime;
 public class LobbyManager : MonoBehaviourPunCallbacks
 {
 
-    //[SerializeField] TMP_Text playerCountText;
+    [SerializeField] TMP_Text playerCountText;
 
     private void Update()
     {
-        //playerCountText.text = PhotonNetwork.CurrentRoom.PlayerCount.ToString();
+        playerCountText.text = PhotonNetwork.CurrentRoom.PlayerCount.ToString();
 
     }
 
@@ -34,7 +34,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         if(PhotonNetwork.IsMasterClient)
         {
             var playerCount = PhotonNetwork.CurrentRoom.PlayerCount;
-            if (playerCount == 3)
+            if (playerCount == 2)
                 photonView.RPC("LoadLevel", RpcTarget.All);
         }
 

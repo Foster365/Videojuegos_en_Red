@@ -1,0 +1,7 @@
+Sistema de turnos:
+
+Sistema de Turnos (Class) -> Va a tner los estados (enum)
+
+Servidor -> Va a recorrer el diccionario cada 1 segundo preguntando si es el turno de mi player, si es el turno de
+mi player voy a llamar a mi referencia de sistema de turnos (GObject) y le voy a hacer el request (Esto por cada player, el servidor va a
+controlar cada player)

@@ -48,6 +48,10 @@ MonoBehaviour:
   - RequestGotoWaypoint
   - PlayerGameOverCallback
   - PlayerWinCallback
+  - RequestGetPlayer
+  - SetPlayer
+  - RequestGoToWaypoint
+  - RequestMovePlayer
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

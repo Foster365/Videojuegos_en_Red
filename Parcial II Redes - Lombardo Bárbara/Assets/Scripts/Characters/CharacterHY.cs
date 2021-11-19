@@ -1,9 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
 
-public class CharacterHY : MonoBehaviour
+using Photon.Pun;
+using Photon.Realtime;
+
+public class CharacterHY : MonoBehaviourPun
 {
+
     float speed;
     bool isSpawn;
     [SerializeField] string prefabName;
@@ -11,17 +16,23 @@ public class CharacterHY : MonoBehaviour
     Rigidbody playerRigidbody;
     CharacterAnimations characterAnim;
 
+    //Turn based system variables
+    bool isMyTurn = false;
+
     //Waypoints
     [SerializeField] List<GameObject> waypoints;
     float distance;
     int nextWaypoint = 0;
     int indexModifier = 1;
+    int maxWaypoints = 0; //Este número es el que me va a tirar el dado
 
     public List<GameObject> Waypoints { get => waypoints; set => waypoints = value; }
     public float Distance { get => distance; set => distance = value; }
     public int NextWaypoint { get => nextWaypoint; set => nextWaypoint = value; }
     public int IndexModifier { get => indexModifier; set => indexModifier = value; }
     public bool IsSpawn { get => isSpawn; set => isSpawn = value; }
+    public int MaxWaypoints { get => maxWaypoints; set => maxWaypoints = value; }
+    public bool IsMyTurn { get => isMyTurn; set => isMyTurn = value; }
 
     private void Start()
     {

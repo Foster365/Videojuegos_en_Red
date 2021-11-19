@@ -49,8 +49,8 @@ public class NetManager : MonoBehaviourPunCallbacks
         //PhotonNetwork.NickName = playerName.text;
 
         RoomOptions options = new RoomOptions(); // Seteo las configs de la room
-        //options.IsOpen = true;
-        //options.IsVisible = true;
+        options.IsOpen = true;
+        options.IsVisible = true;
         options.MaxPlayers = 4;
         PhotonNetwork.JoinOrCreateRoom("Lobby", options, TypedLobby.Default); // Me conecto a la sala con el nombre "BoardGameRoom" o
                                                                                       // creo una, utilizando esos settings

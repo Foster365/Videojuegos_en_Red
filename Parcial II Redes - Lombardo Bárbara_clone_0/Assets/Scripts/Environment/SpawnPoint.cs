@@ -5,9 +5,9 @@ using UnityEngine;
 public class SpawnPoint : MonoBehaviour
 {
 
-    bool isAvaiable;
+    bool isAvaiable = true;
 
-    public bool IsAvaiable { get => isAvaiable; set => isAvaiable = true; }
+    public bool IsAvaiable { get => isAvaiable; set => isAvaiable = value; }
 
     private void OnDrawGizmos()
     {

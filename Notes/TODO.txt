@@ -21,7 +21,7 @@ rebuscado)
 
 Las naves se pueden reemplazar con baldosas que giren sobre el lugar, y me hagan retroceder un casillero.
 
--> Setear condición de no arrancar hasta no tener 4 players.
+-> Setear condición de no arrancar hasta no tener 4 players. OK
 	+ Pantalla gris con medio alpha.
 	+ Inhabilitar UI y controlles. Condición en el GM y el Server.
 	+ Podemos crear un lobby (Otra escena con texto, indicando la cant de players que hay y faltan para empezar, que me permita apretar un botón de
@@ -34,7 +34,7 @@ Las naves se pueden reemplazar con baldosas que giren sobre el lugar, y me hagan
 		la cantidad de players que hay conectados.
 		+ Al cumplirse la condición me va a dirigir al juego (Con SceneManagement, con la librería UnityEngine.SceneManagement).
 
--> Photon Chat:
+-> Photon Chat: OK
 	+ Scripts.
 	+ UI.
 -> Photon Voice:

@@ -8,117 +8,122 @@ using Photon.Realtime;
 public class GameServer : MonoBehaviourPun
 {
 
-    [SerializeField] string prefabsFolder = "";
-    //[SerializeField] GameObject[] prefabs;
-    [SerializeField] GameObject prefab;
-    [SerializeField] Transform sp;
-
+    [SerializeField] string path = "";
+    [SerializeField] GameObject playerPrefab;
     GameObject[] spawnPoints;
 
-    Player gameServer;
+    Player playerServer;
+
     Dictionary<Player, CharacterHY> characters = new Dictionary<Player, CharacterHY>();
-
-    private void Start()
-    {
-        spawnPoints = GameObject.FindGameObjectsWithTag("SpawnPoint");
-
-        Debug.Log("Player nickname" + PhotonNetwork.NickName);
-
-    }
 
     private void Awake()
     {
-        gameServer = PhotonNetwork.MasterClient;
-    }
+        playerServer = PhotonNetwork.MasterClient; //Defino quién es mi servidor (El MasterClient)
 
-    [PunRPC]
-    public void InitializePlayer(Player clientPlayer)
-    {
-
-        PhotonNetwork.Instantiate("Player", sp.position, Quaternion.identity);
-
-        //GameObject playerNameToInstantiate = GetPlayerToInstantiate();
-
-        //if(!characters[clientPlayer].gameObject.GetComponent<CharacterHY>().IsSpawn)
-        //{
-
-        //    GameObject obj = PhotonNetwork.Instantiate("Player", sp.position, Quaternion.identity);
-        //    CharacterHY character = obj.GetComponent<CharacterHY>();
-        //    characters[clientPlayer] = character;
-        //    character.IsSpawn = true;
-
-        //}
-        //int characterID = character.photonview.ViewID; // BUG ALERT Tira error porque no tiene los libraries de photon.
+        spawnPoints = GameObject.FindGameObjectsWithTag("SpawnPoint");
 
     }
 
-    [PunRPC]
-    public void RequestRegisterPlayer(Player clientPlayer, int playerID)
+    void RunDictionary()
     {
 
-        PhotonView photonView = PhotonView.Find(playerID);
-        if (photonView == null) return;
-
-        var character = photonView.GetComponent<CharacterHY>();
-        if (character == null) return;
-        characters[clientPlayer] = character;
-
-    }
-
-    #region Server Requests
-
-    [PunRPC]
-    public void RequestMove(Player client, Vector3 direction)
-    {
-        if(characters.ContainsKey(client))
+        for (int i = 0; i < characters.Count; i++)
         {
-            var character = characters[client];
-            character.Move(direction);
+            
         }
     }
 
+    #region Character gameplay requests
+
     [PunRPC]
-    void RequestGotoWaypoint(Player client) // Retornaba Vector3
+    public void RequestGoToWaypoint(Player client, Vector3 direction)
     {
 
-        if(characters.ContainsKey(client))
+        if (characters.ContainsKey(client))
         {
             var character = characters[client];
-
-            var waypoint = character.Waypoints[character.NextWaypoint];
-            var waypointPosition = waypoint.transform.position;
-            waypointPosition.y = transform.position.y;
-
-            Vector3 dir = waypointPosition - transform.position;
-
-            if (dir.magnitude < character.Distance)
+            if(character.NextWaypoint <= character.MaxWaypoints)
             {
 
-                if (character.NextWaypoint + character.IndexModifier >= character.Waypoints.Count
-                    || character.NextWaypoint + character.IndexModifier < 0) character.IndexModifier *= -1;
+                var waypoint = character.Waypoints[character.NextWaypoint];
+                var waypointPosition = waypoint.transform.position;
+                waypointPosition.y = transform.position.y;
 
-                character.NextWaypoint += character.IndexModifier;
+                Vector3 dir = waypointPosition - transform.position;
+
+                if (dir.magnitude < character.Distance)
+                {
+
+                    if (character.NextWaypoint + character.IndexModifier >= character.Waypoints.Count
+                        || character.NextWaypoint + character.IndexModifier < 0) character.IndexModifier *= -1;
+
+                    character.NextWaypoint += character.IndexModifier;
+
+                }
+
+                photonView.RPC("RequestMove", client, (client, dir.normalized));
+                //return dir;
 
             }
-
-            photonView.RPC("RequestMove", client, (client, dir.normalized));
-            //return dir;
-
         }
-
 
     }
 
+[PunRPC]
+    public void RequestMovePlayer(Player client)
+    {
+
+    }
+    #endregion
+
+    #region Character set up requests
+
     [PunRPC]
-    public void RequestAnim(Player client, string animName)
+    public void InitializePlayer(Player client)
+    {
+        GameObject playerInstantiatedPrefab = PhotonNetwork.Instantiate(playerPrefab.name, GetInitialPosition(), Quaternion.identity);
+        CharacterHY character = playerInstantiatedPrefab.GetComponent<CharacterHY>();
+        characters[client] = character;
+        int characterID = character.photonView.ViewID;
+        //photonView.RPC("RequestRegisterPlayer", RpcTarget.Others, client, characterID);
+    }
+
+    [PunRPC]
+    public void RequestRegisterPlayer(Player client, int ID)
+    {
+        PhotonView characterPhotonView = PhotonView.Find(ID);
+        if (characterPhotonView == null) return;
+
+        var character = characterPhotonView.GetComponent<CharacterHY>();
+        if (character == null) return;
+
+        characters[client] = character;
+    }
+
+    [PunRPC]
+    public void RequestGetPlayer(Player client)
     {
         if(characters.ContainsKey(client))
         {
             var character = characters[client];
-
-            //character.PlayAnimation(animName); //TODO FIX
-
+            int characterID = character.photonView.ViewID;
+            photonView.RPC("SetPlayer", client, characterID);
         }
+    }
+
+    [PunRPC]
+    public void SetPlayer(int characterID)
+    {
+        PhotonView characterPhotonView = PhotonView.Find(characterID);
+        if (characterPhotonView == null) return;
+
+        var character = characterPhotonView.GetComponent<CharacterHY>();
+        if (character == null) return;
+
+        var controller = GameObject.FindObjectOfType<CharacterControllerHY>();
+        if (controller == null) return;
+
+        controller.setCharacter = character;
     }
 
     #endregion
@@ -127,26 +132,29 @@ public class GameServer : MonoBehaviourPun
 
     Vector3 GetInitialPosition()
     {
-        Vector3 spPosition = new Vector3(0, 0, 0);
+
+        if (spawnPoints.Length == 0) Debug.Log("NISSSSSSSSSSSSSSSMAAAAAAAAAAAAAAANNNNNNNNNNNNNNNNNNNNN");
+
+        Vector3 spPosition = Vector3.zero;
         foreach (var sp in spawnPoints)
         {
+            Debug.Log("Nisman entró en el for");
             if (sp.GetComponent<SpawnPoint>().IsAvaiable)
             {
+                Debug.Log("Nisman is avaiable");
                 spPosition = sp.transform.position;
-                //sp.GetComponent<SpawnPoint>().IsAvaiable = false;
+                sp.GetComponent<SpawnPoint>().IsAvaiable = false;
 
             }
         }
 
+        Debug.Log("SpawnPoint position" + spPosition);
         return spPosition;
 
     }
 
-    //GameObject GetPlayerToInstantiate()
-    //{
-    //    return Random.Range(0, prefabs.Length);
-    //}
-
     #endregion
-    public Player GetPlayerServer => gameServer;
+
+    public Player GetPlayerServer => playerServer;
+
 }
