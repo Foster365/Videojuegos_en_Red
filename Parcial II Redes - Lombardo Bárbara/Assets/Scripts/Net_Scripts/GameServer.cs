@@ -9,10 +9,12 @@ public class GameServer : MonoBehaviourPun
 {
 
     [SerializeField] string path = "";
-    [SerializeField] GameObject playerPrefab;
-    GameObject[] spawnPoints;
+    //[SerializeField] GameObject playerPrefab;
+    [SerializeField] GameObject[] spawnPoints;
 
     Player playerServer;
+
+    [SerializeField] Dice dice;
 
     Dictionary<Player, CharacterHY> characters = new Dictionary<Player, CharacterHY>();
 
@@ -20,7 +22,7 @@ public class GameServer : MonoBehaviourPun
     {
         playerServer = PhotonNetwork.MasterClient; //Defino quién es mi servidor (El MasterClient)
 
-        spawnPoints = GameObject.FindGameObjectsWithTag("SpawnPoint");
+        //spawnPoints = GameObject.FindGameObjectsWithTag("SpawnPoint");
 
     }
 
@@ -36,15 +38,37 @@ public class GameServer : MonoBehaviourPun
     #region Character gameplay requests
 
     [PunRPC]
-    public void RequestGoToWaypoint(Player client, Vector3 direction)
+    public void SetPlayerTurn(Player client)
+    {
+        if(characters.ContainsKey(client))
+        {
+            var character = characters[client];
+            if (!character.IsMyTurn) character.IsMyTurn = true;
+        }
+    }
+
+
+    [PunRPC]
+    public int ThrowDice()
+    {
+        int diceThrow = Random.Range(1, 6);
+        //dice.RouletteAction();
+        Debug.Log("Dice Throw: " + diceThrow);
+        return diceThrow;
+    }
+
+    [PunRPC]
+    public void RequestGoToWaypoint(Player client, int maxWp)
     {
 
         if (characters.ContainsKey(client))
         {
             var character = characters[client];
-            if(character.NextWaypoint <= character.MaxWaypoints)
+            if(character.NextWaypoint <= maxWp)
             {
 
+                Debug.Log("Entró al seteo de waypoints");
+                Debug.Log("Next Waypoint" + character.NextWaypoint);
                 var waypoint = character.Waypoints[character.NextWaypoint];
                 var waypointPosition = waypoint.transform.position;
                 waypointPosition.y = transform.position.y;
@@ -54,14 +78,14 @@ public class GameServer : MonoBehaviourPun
                 if (dir.magnitude < character.Distance)
                 {
 
-                    if (character.NextWaypoint + character.IndexModifier >= character.Waypoints.Count
-                        || character.NextWaypoint + character.IndexModifier < 0) character.IndexModifier *= -1;
+                    if (character.NextWaypoint + character.IndexModifier <= character.Waypoints.Count
+                        || character.NextWaypoint + character.IndexModifier > 0) character.IndexModifier *= 1;
 
                     character.NextWaypoint += character.IndexModifier;
 
                 }
 
-                photonView.RPC("RequestMove", client, (client, dir.normalized));
+                photonView.RPC("RequestMovePlayer", RpcTarget.MasterClient, client, dir.normalized, character.GetComponent<Rigidbody>(), 10);
                 //return dir;
 
             }
@@ -70,18 +94,20 @@ public class GameServer : MonoBehaviourPun
     }
 
 [PunRPC]
-    public void RequestMovePlayer(Player client)
+    public void RequestMovePlayer(Player client, Vector3 dir, Rigidbody playerRigidbody, int speed)
     {
-
+        dir = dir.normalized;
+        var ySpeed = playerRigidbody.velocity.y;
+        playerRigidbody.velocity = new Vector3(dir.x * speed, ySpeed);
     }
     #endregion
 
     #region Character set up requests
 
     [PunRPC]
-    public void InitializePlayer(Player client)
+    public void InitializePlayer(Player client, Vector3 position)
     {
-        GameObject playerInstantiatedPrefab = PhotonNetwork.Instantiate(playerPrefab.name, GetInitialPosition(), Quaternion.identity);
+        GameObject playerInstantiatedPrefab = PhotonNetwork.Instantiate("Cube", position, Quaternion.identity);
         CharacterHY character = playerInstantiatedPrefab.GetComponent<CharacterHY>();
         characters[client] = character;
         int characterID = character.photonView.ViewID;
@@ -130,31 +156,41 @@ public class GameServer : MonoBehaviourPun
 
     #region Get Info
 
-    Vector3 GetInitialPosition()
-    {
+    //Vector3 GetInitialPosition()
+    //{
 
-        if (spawnPoints.Length == 0) Debug.Log("NISSSSSSSSSSSSSSSMAAAAAAAAAAAAAAANNNNNNNNNNNNNNNNNNNNN");
+    //    //if (spawnPoints.Length == 0) Debug.Log("NISSSSSSSSSSSSSSSMAAAAAAAAAAAAAAANNNNNNNNNNNNNNNNNNNNN");
 
-        Vector3 spPosition = Vector3.zero;
-        foreach (var sp in spawnPoints)
-        {
-            Debug.Log("Nisman entró en el for");
-            if (sp.GetComponent<SpawnPoint>().IsAvaiable)
-            {
-                Debug.Log("Nisman is avaiable");
-                spPosition = sp.transform.position;
-                sp.GetComponent<SpawnPoint>().IsAvaiable = false;
+    //    for (int i = 0; i < spawnPoints.Length; i++)
+    //    {
+    //        if (!spawnPoints[i].GetComponent<SpawnPoint>().IsAvaiable) return;
+    //        if (spawnPoints[i].GetComponent<SpawnPoint>().IsAvaiable)
+    //        {
+    //            Vector3 spPosition = spawnPoints[i].transform.position;
+    //            spawnPoints[i].GetComponent<SpawnPoint>().IsAvaiable = false;
+    //            Debug.Log("Spawn Point Position: " + spPosition);
+    //        }
 
-            }
-        }
+    //    }
 
-        Debug.Log("SpawnPoint position" + spPosition);
-        return spPosition;
+    //    return Vector3.zero;
+    //    //foreach (var sp in spawnPoints)
+    //    //{
+    //    //Debug.Log("Nisman entró en el for");
+    //    //if (sp.GetComponent<SpawnPoint>().IsAvaiable)
+    //    //{
+    //    //    Debug.Log("Nisman is avaiable");
+    //    //    sp.GetComponent<SpawnPoint>().IsAvaiable = false;
 
-    }
+    //    //}
+    //    //}
+
+    //}
 
     #endregion
 
     public Player GetPlayerServer => playerServer;
 
+    public Dictionary<Player, CharacterHY> Characters { get => characters; set => characters = value; }
+    public GameObject[] SpawnPoints { get => spawnPoints; set => spawnPoints = value; }
 }

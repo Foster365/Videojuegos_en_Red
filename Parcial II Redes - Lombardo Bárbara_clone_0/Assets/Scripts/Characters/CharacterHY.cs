@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System.Linq;
+using System.Collections;
 using System.Collections.Generic;
 
 using UnityEngine;
@@ -20,7 +21,7 @@ public class CharacterHY : MonoBehaviourPun
     bool isMyTurn = false;
 
     //Waypoints
-    [SerializeField] List<GameObject> waypoints;
+    List<GameObject> waypoints;
     float distance;
     int nextWaypoint = 0;
     int indexModifier = 1;
@@ -39,7 +40,9 @@ public class CharacterHY : MonoBehaviourPun
 
         isSpawn = false;
 
-        waypoints = GetWaypoints();
+        //waypoints = GetWaypoints();
+
+        waypoints = GameObject.FindGameObjectsWithTag("Waypoints_Test").ToList();
 
     }
 

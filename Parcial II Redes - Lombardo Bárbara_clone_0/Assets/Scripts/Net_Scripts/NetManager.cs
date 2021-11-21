@@ -24,13 +24,13 @@ public class NetManager : MonoBehaviourPunCallbacks
 
     public override void OnConnectedToMaster()
     {
-        Debug.Log("Connected to master");
+        //Debug.Log("Connected to master");
         PhotonNetwork.JoinLobby(); //Busco un lobby por default
     }
 
     public override void OnJoinedLobby()
     {
-        Debug.Log("Connected to lobby");
+        //Debug.Log("Connected to lobby");
         startGameButton.interactable = true;
     }
 
@@ -52,7 +52,7 @@ public class NetManager : MonoBehaviourPunCallbacks
         options.IsOpen = true;
         options.IsVisible = true;
         options.MaxPlayers = 4;
-        PhotonNetwork.JoinOrCreateRoom("Lobby", options, TypedLobby.Default); // Me conecto a la sala con el nombre "BoardGameRoom" o
+        PhotonNetwork.JoinOrCreateRoom("GameRoom", options, TypedLobby.Default); // Me conecto a la sala con el nombre "BoardGameRoom" o
                                                                                       // creo una, utilizando esos settings
 
     }
@@ -60,6 +60,6 @@ public class NetManager : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         //Una vez creada la room cargo el nivel
-        PhotonNetwork.LoadLevel("Lobby"); //Antes era Gameplay
+        PhotonNetwork.LoadLevel("Gameplay"); //Antes era Gameplay
     }
 }

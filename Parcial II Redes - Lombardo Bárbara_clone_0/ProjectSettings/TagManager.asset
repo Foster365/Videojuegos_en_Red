@@ -6,6 +6,7 @@ TagManager:
   tags:
   - SpawnPoint
   - Grenade_Win_Trigger
+  - Waypoints_Test
   layers:
   - Default
   - TransparentFX

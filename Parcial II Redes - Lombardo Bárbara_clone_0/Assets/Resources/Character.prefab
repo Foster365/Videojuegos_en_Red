@@ -138,6 +138,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a46a7764b2c7bc458dfde39522579fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  prefabName: 
+  waypoints: []
 --- !u!114 &1762287589570127120
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -72,27 +72,33 @@ public class Dice : MonoBehaviour
 
     int ThrowOne()
     {
+        Debug.Log("One");
         return 1;
     }
 
     int ThrowTwo()
     {
+        Debug.Log("Two");
         return 2;
     }
     int ThrowThree()
     {
+        Debug.Log("Three");
         return 3;
     }
     int ThrowFour()
     {
+        Debug.Log("Four");
         return 4;
     }
     int ThrowFive()
     {
+        Debug.Log("Five");
         return 5;
     }
     int ThrowSix()
     {
+        Debug.Log("Six");
         return 6;
     }
     #endregion

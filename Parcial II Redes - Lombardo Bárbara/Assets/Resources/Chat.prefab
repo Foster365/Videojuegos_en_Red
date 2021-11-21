@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4662814215462197487}
   - component: {fileID: 4662814215462197486}
+  - component: {fileID: 3087904264503518377}
   m_Layer: 5
   m_Name: Chat
   m_TagString: Untagged
@@ -53,6 +54,20 @@ MonoBehaviour:
   chatLineContent: {fileID: 4662814216492715117}
   messageInputField: {fileID: 4662814215917697862}
   chatScroll: {fileID: 4662814215641599874}
+--- !u!114 &3087904264503518377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4662814215462197484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a46a7764b2c7bc458dfde39522579fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefabName: 
+  waypoints: []
 --- !u!1 &4662814215481256495
 GameObject:
   m_ObjectHideFlags: 0

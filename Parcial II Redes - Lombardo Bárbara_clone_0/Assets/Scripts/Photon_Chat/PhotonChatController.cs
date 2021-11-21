@@ -74,7 +74,7 @@ public class PhotonChatController : MonoBehaviour, IChatClientListener
 
     private void Update()
     {
-        if (playerChatClient != null) Debug.Log("Player Chat Client is not null");
+
         playerChatClient.Service(); //Recibe las actualizaciones en cuanto a mensajes, estados
     }
 

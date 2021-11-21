@@ -1,116 +1,119 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using System.Linq;
 using System.Collections.Generic;
+
 using UnityEngine;
 
+using Photon.Pun;
+using Photon.Realtime;
 
-public enum TurnState { START, PLAYERTURN, ENEMYTURN, WON, GAMEOVER }
+public enum TurnState { START, PLAYERTURN, WON, GAMEOVER }
 
 public class TurnBasedSystem : MonoBehaviour
 {
 
-    [SerializeField] GameObject playerPrefab;// Puedo usar los jugadores almacenados en el diccionario del servidor, el local sería el mío y los demás (Recorrer el diccionario)
-                                            //serían los enemigos
-    [SerializeField] GameObject enemyPrefab;
+    [SerializeField] GameServer gameServer;
+    [SerializeField] DiceController diceController;
+    [SerializeField] Transform[] spawnPoints;
 
-    [SerializeField] Transform playerBattleStation;
-    [SerializeField] Transform enemyBattleStation;
-
-    CharacterHY playerUnit; // En el tutorial es Unit (class)
-    CharacterHY enemyUnit;
+    List<CharacterHY> characters = new List<CharacterHY>(); //Reemplazado por PhotonNetwork.PlayerList
 
     TurnState currentState;
 
-    // Start is called before the first frame update
+    List<Transform> spList = new List<Transform>();
+
+    Player localPlayer;
+    Player clientServer;
+
+    //PhotonNetwork.CurrentRoom.PlayersList // PhotonNetwork.PlayersList,
+    // int -> Número de jugador que me toca
+    //MasterClient -> Lleva la cuenta y determina el player al cual le toca. Envía un RPC avisando el player al que le toca.
+
+    int activePlayerNumber = 0;
+
     void Start()
     {
+        localPlayer = PhotonNetwork.LocalPlayer; //Obtengo el localPLayer para ya tenerlo
+        clientServer = gameServer.GetPlayerServer;
 
         currentState = TurnState.START;
 
-        StartCoroutine(SetUpGame());
-        
+        spList = spawnPoints.ToList();
+
+        //if(PhotonNetwork.IsMasterClient)
+            StartCoroutine(SetUpGame());
+
+    }
+
+    private void Update()
+    {
+        //if (Input.GetKeyDown(KeyCode.T))
+        //{
+
+        //    gameServer.photonView.RPC("ThrowDice", RpcTarget.MasterClient);
+        //    gameServer.photonView.RPC("RequestMovePlayer", RpcTarget.MasterClient);
+        //}
     }
 
     IEnumerator SetUpGame()
     {
-        GameObject playerGO = Instantiate(playerPrefab, playerBattleStation);
-        playerUnit = playerGO.GetComponent<CharacterHY>();
 
-        GameObject enemyGO = Instantiate(enemyPrefab, enemyBattleStation);
-        enemyUnit = enemyGO.GetComponent<CharacterHY>();
+        SetGameTurnActions();
 
-        //gameServer.photonView.RPC("InitializePlayer", clientServer, localPlayer);
-        //gameServer.photonView.RPC("RequestGetPlayer", clientServer, localPlayer);
+        GetInitialPosition();
 
         yield return new WaitForSeconds(2f);
 
-        currentState = TurnState.PLAYERTURN;
-        PlayerTurn();
+        Debug.Log("Throwing Dice...");
+
+        SetGameTurnActions(); //Va a loopear constantemente entre los dos estados, porque va a ir recorriendo el array de players.
 
     }
 
-    IEnumerator PlayerAttack()
+    void SetGameTurnActions()
     {
-        //bool isDead = enemyUnit.TakeDamage(playerUnit.damage);
-        yield return new WaitForSeconds(2f);
 
-        //Check if enemy is dead
-        //if (isDead)
-        //{
-        //    TurnState.WON;// End the battle
-        //    EndBattle();
-        //}
-        //else
-        //{
-        //    currentState = TurnState.ENEMYTURN;
-        //    StartCoroutine(EnemyTurn());
-        //}
+        if(PhotonNetwork.IsMasterClient)
+        {
+            for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
+            {
 
-        //CHange state based on what happened
+                gameServer.photonView.RPC("SetPlayerTurn", RpcTarget.MasterClient, PhotonNetwork.PlayerList[i]);
+                gameServer.photonView.RPC("ThrowDice", RpcTarget.MasterClient);
+                gameServer.photonView.RPC("RequestGoToWaypoint", RpcTarget.MasterClient, PhotonNetwork.PlayerList[i], 3);
+
+            }
+
+        }
+
     }
 
-    IEnumerator EnemyTurn()
+    void GetInitialPosition()
     {
-        //dialogueText.text = enemyUnit.unitName + "attacks! ";
-        yield return new WaitForSeconds(1f);
-
-        //bool isDead = playerUnit.TakeDamage(enemyUnit.damage);
-
-        yield return new WaitForSeconds(1f);
-
-        //if (isDead)
+        //if (PhotonNetwork.IsMasterClient)
         //{
-        //    currentState = TurnState.LOST;
-        //    EndBattle();
-        //}
-        //else
-        //{
-        //    currentState = TurnState.PLAYERTURN;
-        //    PlayerTurn();
-        //}
-    }
 
-    void EndBattle()
-    {
-        //if(currentState == TurnState.WON)
-        //{
-        //    dialogueText.text = "You won the battle!";
-        //}
-        //else if(currentState == TurnState.LOST)
-        //{
-        //    dialogueText.text = "You were defeated."
-        //}
-    }
+            for (int i = 0; i < spList.Count; i++)
+            {
 
-    public void PlayerTurn()
-    {
-        //dialogueText.text = "Choose an action: " //Tengo que poner una UI que me indique los turnos.
-    }
-    public void OnAttackButton()
-    {
-        if (currentState != TurnState.PLAYERTURN) return;
+                //gameServer.photonView.RPC("RequestGetPlayer", clientServer, clientServer);
 
-        StartCoroutine(PlayerAttack());
+                if (spList[i].GetComponent<SpawnPoint>().IsAvaiable)
+                {
 
+                    Debug.Log("Spawn points list count: " + spList.Count);
+
+                    Vector3 spPosition = spList[i].transform.position;
+
+                    gameServer.photonView.RPC("InitializePlayer", gameServer.GetPlayerServer, localPlayer, spPosition);
+                    spList.RemoveAt(i);
+
+                    Debug.Log("Spawn Point Position: " + spPosition);
+                    Debug.Log("Spawn Points List Count: " + spList.Count);
+                    break;
+                }
+            }
     }
 
 }

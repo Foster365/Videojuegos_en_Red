@@ -1,18 +1,25 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
 
-public class DiceController : MonoBehaviour
+using Photon.Pun;
+using Photon.Realtime;
+
+public class DiceController : MonoBehaviourPun
 {
-    // Start is called before the first frame update
-    void Start()
+
+    Dice dice;
+
+    private void Awake()
     {
-        
+        dice = GetComponent<Dice>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    //[PunRPC]
+    //public void ThrowDice()
+    //{
+    //    dice.RouletteAction();
+    //}
+
 }
