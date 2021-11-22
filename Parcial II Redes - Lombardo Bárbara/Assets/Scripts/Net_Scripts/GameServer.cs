@@ -107,9 +107,20 @@ public class GameServer : MonoBehaviourPun
 [PunRPC]
     public void RequestMovePlayer(Player client, Vector3 dir, Rigidbody playerRigidbody, int speed)
     {
-        dir = dir.normalized;
-        var ySpeed = playerRigidbody.velocity.y;
-        playerRigidbody.velocity = new Vector3(dir.x * speed, ySpeed);
+        if(characters.ContainsKey(client))
+        {
+
+            var character = characters[client];
+            Rigidbody characterRigidbody = character.photonView.GetComponent<Rigidbody>();
+
+            dir.y = 0;
+            characterRigidbody.velocity = dir * speed;
+            character.photonView.transform.forward = Vector3.Lerp(character.photonView.transform.forward, dir, .2f);
+            //dir = dir.normalized;
+            //var ySpeed = characterRigidbody.velocity.y;
+            //playerRigidbody.velocity = new Vector3(dir.x * speed, ySpeed);
+
+        }
     }
     #endregion
 
