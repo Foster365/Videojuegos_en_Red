@@ -21,13 +21,14 @@ public class CharacterHY : MonoBehaviourPun
     bool isMyTurn = false;
 
     //Waypoints
-    List<GameObject> waypoints;
-    float distance;
+    //GameObject[] playerWaypoints;
+    //List<GameObject> waypoints = new List<GameObject>();
+    float distance = 5;
     int nextWaypoint = 0;
     int indexModifier = 1;
     int maxWaypoints = 0; //Este número es el que me va a tirar el dado
 
-    public List<GameObject> Waypoints { get => waypoints; set => waypoints = value; }
+    //public List<GameObject> Waypoints { get => waypoints; set => waypoints = value; }
     public float Distance { get => distance; set => distance = value; }
     public int NextWaypoint { get => nextWaypoint; set => nextWaypoint = value; }
     public int IndexModifier { get => indexModifier; set => indexModifier = value; }
@@ -42,7 +43,7 @@ public class CharacterHY : MonoBehaviourPun
 
         //waypoints = GetWaypoints();
 
-        waypoints = GameObject.FindGameObjectsWithTag("Waypoints_Test").ToList();
+        //waypoints = playerWaypoints.ToList();
 
     }
 

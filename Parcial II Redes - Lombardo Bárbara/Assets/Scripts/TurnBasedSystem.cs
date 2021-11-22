@@ -48,6 +48,8 @@ public class TurnBasedSystem : MonoBehaviour
 
     private void Update()
     {
+
+        SetGameTurnActions();
         //if (Input.GetKeyDown(KeyCode.T))
         //{
 
@@ -59,9 +61,11 @@ public class TurnBasedSystem : MonoBehaviour
     IEnumerator SetUpGame()
     {
 
-        SetGameTurnActions();
+        //SetGameTurnActions();
 
         GetInitialPosition();
+
+        currentState = TurnState.PLAYERTURN;
 
         yield return new WaitForSeconds(2f);
 
@@ -74,19 +78,26 @@ public class TurnBasedSystem : MonoBehaviour
     void SetGameTurnActions()
     {
 
-        if(PhotonNetwork.IsMasterClient)
+        if(PhotonNetwork.IsMasterClient && currentState == TurnState.PLAYERTURN)
         {
             for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
             {
 
-                gameServer.photonView.RPC("SetPlayerTurn", RpcTarget.MasterClient, PhotonNetwork.PlayerList[i]);
-                gameServer.photonView.RPC("ThrowDice", RpcTarget.MasterClient);
-                gameServer.photonView.RPC("RequestGoToWaypoint", RpcTarget.MasterClient, PhotonNetwork.PlayerList[i], 3);
+                gameServer.photonView.RPC("SetPlayerTurn", clientServer, PhotonNetwork.PlayerList[i]);
+                gameServer.photonView.RPC("ThrowDice", clientServer);
+                StartCoroutine(WaitUntilMove());
+                gameServer.photonView.RPC("RequestGoToWaypoint", clientServer, PhotonNetwork.PlayerList[i], 3);
 
             }
 
         }
 
+    }
+
+    IEnumerator WaitUntilMove()
+    {
+        Debug.Log("Waiting to move");
+        yield return new WaitForSeconds(2f);
     }
 
     void GetInitialPosition()
