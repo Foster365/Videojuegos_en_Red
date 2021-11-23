@@ -17,20 +17,12 @@ public class TurnBasedSystem : MonoBehaviour
     [SerializeField] DiceController diceController;
     [SerializeField] Transform[] spawnPoints;
 
-    List<CharacterHY> characters = new List<CharacterHY>(); //Reemplazado por PhotonNetwork.PlayerList
-
     TurnState currentState;
 
     List<Transform> spList = new List<Transform>();
 
     Player localPlayer;
     Player clientServer;
-
-    //PhotonNetwork.CurrentRoom.PlayersList // PhotonNetwork.PlayersList,
-    // int -> Número de jugador que me toca
-    //MasterClient -> Lleva la cuenta y determina el player al cual le toca. Envía un RPC avisando el player al que le toca.
-
-    int activePlayerNumber = 0;
 
     void Start()
     {
@@ -69,10 +61,6 @@ public class TurnBasedSystem : MonoBehaviour
 
         yield return new WaitForSeconds(2f);
 
-        Debug.Log("Throwing Dice...");
-
-        SetGameTurnActions(); //Va a loopear constantemente entre los dos estados, porque va a ir recorriendo el array de players.
-
     }
 
     void SetGameTurnActions()
@@ -84,6 +72,9 @@ public class TurnBasedSystem : MonoBehaviour
             {
 
                 gameServer.photonView.RPC("SetPlayerTurn", clientServer, PhotonNetwork.PlayerList[i]);
+
+                Debug.Log("Throwing Dice...");
+
                 gameServer.photonView.RPC("ThrowDice", clientServer);
                 StartCoroutine(WaitUntilMove());
                 gameServer.photonView.RPC("RequestGoToWaypoint", clientServer, PhotonNetwork.PlayerList[i], 3);

@@ -26,19 +26,6 @@ public class GameServer : MonoBehaviourPun
     {
         playerServer = PhotonNetwork.MasterClient; //Defino quién es mi servidor (El MasterClient)
 
-        //waypoints = playerWaypoints.ToList();
-
-        //spawnPoints = GameObject.FindGameObjectsWithTag("SpawnPoint");
-
-    }
-
-    void RunDictionary()
-    {
-
-        for (int i = 0; i < characters.Count; i++)
-        {
-            
-        }
     }
 
     #region Character gameplay requests
@@ -92,12 +79,10 @@ public class GameServer : MonoBehaviourPun
                         || character.NextWaypoint + character.IndexModifier < 0) character.IndexModifier *= -1;
 
                     character.NextWaypoint += character.IndexModifier;
-
-
+                
                 }
 
-                photonView.RPC("RequestMovePlayer", playerServer, client, dir.normalized, character.GetComponent<Rigidbody>(), 30);
-                //return dir;
+                photonView.RPC("RequestMovePlayer", playerServer, client, dir.normalized, character.GetComponent<Rigidbody>(), 5);
 
             }
         }
