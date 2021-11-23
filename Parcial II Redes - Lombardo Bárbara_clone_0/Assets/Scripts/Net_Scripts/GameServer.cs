@@ -82,9 +82,14 @@ public class GameServer : MonoBehaviourPun
                 
                 }
 
+
                 photonView.RPC("RequestMovePlayer", playerServer, client, dir.normalized, character.GetComponent<Rigidbody>(), 5);
+                photonView.RPC("PlayerMovingAnimation", playerServer, client, character.photonView.GetComponent<Rigidbody>().velocity.magnitude);
 
             }
+
+            //character.photonView.GetComponent<CharacterAnimations>().MovingAnimation(true);
+
         }
 
     }
@@ -107,6 +112,20 @@ public class GameServer : MonoBehaviourPun
 
         }
     }
+
+    #region Character animations
+    [PunRPC]
+    public void PlayerMovingAnimation(Player client, float vel)
+    {
+
+        if(characters.ContainsKey(client) && characters[client].photonView.IsMine)
+        {
+            var character = characters[client];
+            character.photonView.GetComponent<CharacterAnimations>().CharacterAnim.SetFloat("Character_Velocity", vel);
+        }
+    }
+
+    #endregion
     #endregion
 
     #region Character set up requests
@@ -114,7 +133,7 @@ public class GameServer : MonoBehaviourPun
     [PunRPC]
     public void InitializePlayer(Player client, Vector3 position)
     {
-        GameObject playerInstantiatedPrefab = PhotonNetwork.Instantiate("Cube", position, Quaternion.identity);
+        GameObject playerInstantiatedPrefab = PhotonNetwork.Instantiate("Jammo_Player", position, Quaternion.identity);
         CharacterHY character = playerInstantiatedPrefab.GetComponent<CharacterHY>();
         characters[client] = character;
         int characterID = character.photonView.ViewID;
